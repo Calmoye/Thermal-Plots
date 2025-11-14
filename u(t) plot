@@ -1,0 +1,25 @@
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import quad
+
+def integrand(x, t):
+    term = np.sqrt(x**2 + (1/t)**2)
+    return x**2 * term / (np.exp(term) + 1)
+
+def u(t):
+    result, _ = quad(integrand, 0, 15, args=(t,))
+    return result
+
+t_values = np.linspace(0.1, 1.5, 100)
+u_values = [u(t) for t in t_values]
+
+plt.style.use('seaborn-v0_8')
+plt.figure(figsize=(10, 6))
+plt.plot(y_values, u_values, color='blue', linewidth=2)
+plt.title(r'u(t) plotted at intermiedate temperatures', fontsize=14)
+plt.xlabel(r'$t = \frac{kT}{mc^2}$', fontsize=12)
+plt.ylabel('u(t)', fontsize=12)
+plt.grid(True)
+plt.tight_layout()
+plt.show()
